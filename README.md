@@ -1,6 +1,6 @@
 ## About
 
-While many tools are available for applications deployment to machines in the cloud, doing so with having no downtime while maintaining simplicity in the deployment process is a testament to the usefulness of the tools when it comes to enabling devops.
+While many tools (that enable devops practice and culture) are available for applications deployment to machines in the cloud, doing so with having no downtime while maintaining simplicity in the deployment process is a testament to the usefulness of the tools when it comes to enabling devops.
 
 Though a single tool may empower methods such as infrastructure as code, continuous integration and deployment and immutability, it is important to measure the strengths of each tool against the value it adds to the devops culture in place as methods are subservient to values.
 
@@ -22,3 +22,4 @@ The aim of this project is to make use of industry standard tools to eliminate t
 - Atlas
 - Amazon Web Services (AWS)
 - Git
+- Ubuntu
