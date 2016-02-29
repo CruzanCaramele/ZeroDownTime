@@ -33,3 +33,10 @@ The aim of this project is to make use of industry standard tools to eliminate t
 - packer folder : An amazon machine image (AMI) created for launching nodes
 - terraform folder : Infrastructure turned into code
 
+### Delivery Pipeline and Image Deploys Process
+
+![Delivery Flow](/workflow.jpg)
+
+Packer runs in Atlas to build the application AMI which is provisioned and configured using Puppet. This creates an  artifact that is stored in [Atlas](https://atlas.hashicorp.com). 
+
+Terraform then reads from the artifact registry and deploys new instances using this AMI. When the application AMI is updated, the process starts again – continuous delivery for immutable infrastructure. New nodes are created when change takes place in the AMI or the infrastructure itself, then old nodes are destroyed with the former occuring first to avoid downtime during the process.
