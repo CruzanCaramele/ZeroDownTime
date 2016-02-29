@@ -23,3 +23,13 @@ The aim of this project is to make use of industry standard tools to eliminate t
 - Amazon Web Services (AWS)
 - Git
 - Ubuntu
+
+### Requirements
+- [AWS Account](https://console.aws.amazon.com/) 
+- [Atlas Account](https://atlas.hashicorp.com/account/new)
+
+### Content
+- app folder : A simple sample application to be deployed
+- packer folder : An amazon machine image (AMI) created for launching nodes
+- terraform folder : Infrastructure turned into code
+
