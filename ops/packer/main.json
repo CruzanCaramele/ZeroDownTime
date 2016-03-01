@@ -27,14 +27,13 @@
     "provisioners": [
     {
         "type": "shell",
-        "script" : "scripts/cloud.sh"
+        "script" : "scripts/provisioner.sh"
     },
 
     {
         "type": "puppet-masterless",
         "manifest_file": "puppet/manifests/site.pp",
         "module_paths": ["puppet/modules"]
-
     }
 
     ],
@@ -54,6 +53,6 @@
     "push" :
     {
     	"name": "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
-    	"vcs" : "false"
+    	"vcs" : false
     }
 }
