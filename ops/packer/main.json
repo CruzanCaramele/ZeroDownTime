@@ -1,0 +1,41 @@
+{
+    "variables": 
+    {
+        "PACKER_OS_FLAVOUR": "ubuntu",
+        "PACKER_BOX_NAME": "ubuntu-14.04.3-server-amd64",
+        "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+        "ATLAS_TOKEN": "{{env `ATLAS_TOKEN`}}",
+        "ATLAS_USERNAME": "{{env `ATLAS_USERNAME`}}",
+        "ATLAS_NAME": "{{env `ATLAS_NAME`}}"
+    },
+
+    "builders": [
+    {
+        "type": "amazon-ebs",
+        "access_key": "{{ user `AWS_ACCESS_KEY_ID` }}",
+        "secret_key"  : "{{ user `AWS_SECRET_ACCESS_KEY` }}",
+        "region"          : "us-east-1",
+        "source_ami" : "ami-10b68a78",
+        "instance_type" : "t1.micro",
+        "ssh_username" : "ubuntu",
+        "ami_name": "culturely {{timestamp}}"
+    }
+
+    ],
+
+    "provisioners": [
+    {
+        "type": "shell",
+        "script" : "scripts/cloud.sh"
+    },
+
+    {
+        "type": "puppet-masterless",
+        "manifest_file": "puppet/manifests/site.pp",
+        "module_paths": ["puppet/modules"]
+
+    }
+
+    ]
+}
