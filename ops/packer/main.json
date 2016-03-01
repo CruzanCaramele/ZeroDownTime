@@ -37,5 +37,23 @@
 
     }
 
-    ]
+    ],
+
+    "post-processors":[
+    {
+        "type": "atlas",
+        "artifact": "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+        "artifact_type" : "amazon.ami",
+        "metadata": {
+            "created_at": "{{timestamp}}"
+            }
+    }
+
+    ],
+
+    "push" :
+    {
+    	"name": "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+    	"vcs" : "false"
+    }
 }
