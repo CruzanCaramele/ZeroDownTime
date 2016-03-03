@@ -1,1 +1,1 @@
-![Terraform](Terraform.jpg)   		![AWS](AWS.jpg)
+![Terraform](Terraform.jpg)             ![Plus](plus.jpg)     		![AWS](AWS.jpg)
