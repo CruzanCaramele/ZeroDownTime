@@ -87,6 +87,8 @@ resource "aws_elb" "load_balancer" {
 		interval 			= 30
 	}
 
+	instances = ["${aws_instance.zero-down-time.id}"]
+
 	lifecycle {
 		create_before_destroy = true
 	}
