@@ -1,7 +1,7 @@
 variable "aws_access_key" {
-	default = 
+	default = ""
 }
 
 variable "aws_secret_key" {
-	default = 
+	default = ""
 }
