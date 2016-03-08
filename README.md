@@ -43,7 +43,7 @@ Packer runs in Atlas to build the application AMI which is provisioned and confi
 Terraform then reads from the artifact registry and deploys new instances using this AMI. When the application AMI is updated, the process starts again – continuous delivery for immutable infrastructure. New nodes are created when change takes place in the AMI or the infrastructure itself, then old nodes are destroyed with the former occuring first to avoid downtime during the process.
 
 
-### How To Run This Project
+### How To Run This Project (Part 1: Building the Artifact)
 - Ensure you have an [Atlas Account](https://atlas.hashicorp.com/account/new) and [AWS Account](https://console.aws.amazon.com/).
 - Install [Packer](https://www.packer.io/downloads.html) and [Terraform](https://www.terraform.io/downloads.html)
 - Clone [this](https://github.com/CruzanCaramele/ZeroDownTime) repository.
@@ -52,3 +52,6 @@ Terraform then reads from the artifact registry and deploys new instances using 
 - From your Atlas account , navigate to the [Builds link](https://atlas.hashicorp.com/builds) and access the the newly build configuration that you just pushed.
 - On the left side of the page access the **Variables link** and enter all the environmental variables from the **main.json** file and their corresponding values.
 - Navigate back to [Builds link](https://atlas.hashicorp.com/builds) and queue a build. A successfull build results in the creation of an artifact, in this case an AWS artifact. This can be viewed from the [Artifacts link](https://atlas.hashicorp.com/artifacts).
+
+
+### Part 2: Launching the Infrastructure & Deploying the application
