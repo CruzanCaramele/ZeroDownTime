@@ -25,7 +25,7 @@ The aim of this project is to make use of industry standard tools to eliminate t
 - Git
 - Ubuntu
 
-### Requirements
+### Requirements to Run this Project
 - [AWS Account](https://console.aws.amazon.com/) 
 - [Atlas Account](https://atlas.hashicorp.com/account/new)
 
@@ -41,3 +41,12 @@ The aim of this project is to make use of industry standard tools to eliminate t
 Packer runs in Atlas to build the application AMI which is provisioned and configured using Puppet. This creates an  artifact that is stored in [Atlas](https://atlas.hashicorp.com). 
 
 Terraform then reads from the artifact registry and deploys new instances using this AMI. When the application AMI is updated, the process starts again – continuous delivery for immutable infrastructure. New nodes are created when change takes place in the AMI or the infrastructure itself, then old nodes are destroyed with the former occuring first to avoid downtime during the process.
+
+
+### How To Run This Project
+- Ensure you have an [Atlas Account](https://atlas.hashicorp.com/account/new) and [AWS Account](https://console.aws.amazon.com/)
+- Install [Packer](https://www.packer.io/downloads.html) and [Terraform](https://www.terraform.io/downloads.html)
+- Clone [this](https://github.com/CruzanCaramele/ZeroDownTime) repository
+- From the directory **Zero_DownTime/ops/packer** acess the **main.json** file and enter your **Atlas** and **AWS** credentails in the variables section or follow these [instructions](https://www.packer.io/docs/templates/user-variables.html) to set the variables as environmental variables
+- On a command line program such as Git, from within the directory **Zero_DownTime/ops/packer** execute the command **packer push main.json**. This uploads the packer file and provisioners to your [Atlas Account](https://atlas.hashicorp.com).
+- From your Atlas account , navigate to the [Builds link](https://atlas.hashicorp.com/builds)
