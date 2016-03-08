@@ -44,9 +44,11 @@ Terraform then reads from the artifact registry and deploys new instances using 
 
 
 ### How To Run This Project
-- Ensure you have an [Atlas Account](https://atlas.hashicorp.com/account/new) and [AWS Account](https://console.aws.amazon.com/)
+- Ensure you have an [Atlas Account](https://atlas.hashicorp.com/account/new) and [AWS Account](https://console.aws.amazon.com/).
 - Install [Packer](https://www.packer.io/downloads.html) and [Terraform](https://www.terraform.io/downloads.html)
-- Clone [this](https://github.com/CruzanCaramele/ZeroDownTime) repository
-- From the directory **Zero_DownTime/ops/packer** acess the **main.json** file and enter your **Atlas** and **AWS** credentails in the variables section or follow these [instructions](https://www.packer.io/docs/templates/user-variables.html) to set the variables as environmental variables
+- Clone [this](https://github.com/CruzanCaramele/ZeroDownTime) repository.
+- From the directory **Zero_DownTime/ops/packer** acess the **main.json** file and enter your **Atlas** and **AWS** credentails in the variables section or follow these [instructions](https://www.packer.io/docs/templates/user-variables.html) to set the variables as environmental variables.
 - On a command line program such as Git, from within the directory **Zero_DownTime/ops/packer** execute the command **packer push main.json**. This uploads the packer file and provisioners to your [Atlas Account](https://atlas.hashicorp.com).
-- From your Atlas account , navigate to the [Builds link](https://atlas.hashicorp.com/builds)
+- From your Atlas account , navigate to the [Builds link](https://atlas.hashicorp.com/builds) and access the the newly build configuration that you just pushed.
+- On the left side of the page access the **Variables link** and enter all the environmental variables from the **main.json** file and their corresponding values.
+- Navigate back to [Builds link](https://atlas.hashicorp.com/builds) and queue a build. A successfull build results in the creation of an artifact, in this case an AWS artifact. This can be viewed from the [Artifacts link](https://atlas.hashicorp.com/artifacts).
