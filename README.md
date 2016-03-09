@@ -55,4 +55,8 @@ Terraform then reads from the artifact registry and deploys new instances using 
 
 
 ### Part 2: Launching the Infrastructure & Deploying the application
-- 
+- On a command line program such as Git, navigate to the directory **Zero_DownTime/ops/terraform**
+- Create an environment for the infrastructure remotely on Atlas by executing the comman **terraform remote config -backend-config "name=your_atlas_username/name_of_your_environment"**
+- Upload the terraform files by executing the command **terraform push -name "your_atlas_username/name_of_your_environment"**
+- On your Atlas account, navigate to [Terraform Link](https://atlas.hashicorp.com/terraform) and access your newly created environment
+- **Queue Plan** to plan the infrastructure and **Apply Plan** to spin up the nodes and deploy the application on AWS
