@@ -93,3 +93,10 @@ resource "aws_elb" "load_balancer" {
 		create_before_destroy = true
 	}
 }
+#--------------------------------------------------------------
+# proxy protocol policy							
+#--------------------------------------------------------------
+resource "aws_proxy_protocol_policy" "http" {
+	load_balancer  = "${aws_elb.load_balancer.name}"
+	instance_ports = ["80"] 
+}
