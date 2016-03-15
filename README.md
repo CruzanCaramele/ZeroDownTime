@@ -60,3 +60,9 @@ Terraform then reads from the artifact registry and deploys new instances using 
 - Upload the terraform files by executing the command **terraform push -name "your_atlas_username/name_of_your_environment"**
 - On your Atlas account, navigate to [Terraform Link](https://atlas.hashicorp.com/terraform) and access your newly created environment
 - **Queue Plan** to plan the infrastructure and **Apply Plan** to spin up the nodes and deploy the application on AWS
+
+
+### Empathy is part of DevOps
+As a devops practioner, making the lives of the people one works with is essential, as such creating a local development environment that mirrors the production environment for developers is necessary.
+
+In this project the **local.json** file is used to build the development environment identical to the one used in production. This can be used and shared among developers for use regarldess of the operating system the developers work on. This maintains consistency and avoids moments such as --> "that code worked well on my system, it's ops problem now that it does not execute in production."
