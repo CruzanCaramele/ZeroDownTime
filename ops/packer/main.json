@@ -34,6 +34,11 @@
     },
 
     {
+        "type"   : "shell",
+        "inline" : ["sudo apt-get -y install git"]
+    },
+
+    {
         "type"         : "puppet-masterless",
         "manifest_file": "puppet/manifests/site.pp",
         "module_paths" : ["puppet/modules"]
