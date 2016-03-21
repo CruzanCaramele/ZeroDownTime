@@ -2,9 +2,19 @@
     ServerName <%= @servername %>
 
     ServerAdmin hamza@cultureandbrands.com
+	WSGIScriptAlias / /var/www/html/culturely.wsgi
 
-    DocumentRoot <%= @document_root %>
+	<Directory /var/www/html/>
+	  Order allow,deny
+	  Allow from all
+	</Directory>
+	Alias /static /var/www/html/static
+	<Directory /var/www/html/static/>
+	  Order allow,deny
+	  Allow from all
+	</Directory>     
 
-    ErrorLog <%= @log_dir -%>/ <%= @servername -%>-error.log
-    CustomLog <%= @log_dir -%>/ <%= @servername -%>-access.log combined
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>

@@ -2,9 +2,8 @@
 #
 #
 class ssh::params {
-	# params
+	# variables
 	$package_name = "openssh-server"
 	$service_name = "ssh"
-	$ssh_path     = "/etc/ssh"
-	$ssh_file     = "sshd_config"
+	$ssh_dir      = "/etc/ssh"
 }

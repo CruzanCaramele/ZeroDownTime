@@ -5,21 +5,19 @@ class ssh (
 
 	$package_name = $ssh::params::package_name,
 	$service_name = $ssh::params::service_name,
-	$ssh_path     = $ssh:params::ssh_path,
-	$ssh_file     = $ssh::params::ssh_file
-	
-	) inherits ssh::params {
-	# resources
-	include ssh::service
-	include ssh:package
+	$ssh_dir     = $ssh::params::ssh_dir
 
-	file { $ssh_path:
+	) inherits ssh::params {
+
+	include ssh::package
+	include ssh::service
+
+	file { $ssh_dir:
 		ensure  => directory,
 		recurse => true,
 	}
 
-	ssh::sshconfig {"default":
-		ssh_path => $ssh_path,
+	ssh::sshfile {"default":
+		ssh_dir => $ssh_dir,
 	}
-
 }

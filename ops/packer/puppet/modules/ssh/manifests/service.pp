@@ -1,4 +1,4 @@
-# Class: ssh::service ()
+# Class: ssh::service
 #
 #
 class ssh::service (
@@ -11,6 +11,7 @@ class ssh::service (
 		name        => $service_name,
 		enable      => true,
 		ensure      => running,
+		require     => Package['ssh'],
 		subscribe   => File['sshd_config'],
 		#hasrestart => true,
 		#hasstatus  => true,

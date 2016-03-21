@@ -2,20 +2,23 @@
 #
 #
 class apache (
-	# resources
+
 	$servername    = $apache::params::servername,
 	$document_root = $apache::params::document_root,
-	$log_dir       = $apache::params::log_dir,
+	$log_dir	   = $apache::params::log_dir,
 	$package_name  = $apache::params::package_name,
 	$service_name  = $apache::params::service_name,
 	$conf_dir      = $apache::params::conf_dir,
 	$vhost_dir	   = $apache::params::vhost_dir,
-	$app_dir       = $apache::params::webapp_dir
+	$webapp_dir    = $apache::params::webapp_dir,
+	$managerepo    = $apache::params::managerepo
 
 	) inherits apache::params {
+	# resources
 
-	include apache::service
 	include apache::package
+	include apache::service
+
 	file { $document_root:
 		ensure   => directory,
 		recurse => true,
@@ -31,6 +34,7 @@ class apache (
 		document_root => $document_root,
 		servername    => $servername,
 		vhost_dir     => $vhost_dir,
-		app_dir       => $app_dir,
-	}
+		webapp_dir    => $webapp_dir,
+		managerepo    => $managerepo,
+	}	
 }

@@ -2,10 +2,12 @@
 #
 #
 class apache::service (
+
 	$service_name = $apache::params::service_name
 
 	) {
 	# resources
+
 	service { 'apache':
 		name        => $service_name,
 		enable      => true,
