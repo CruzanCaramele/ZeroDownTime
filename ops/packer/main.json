@@ -1,47 +1,50 @@
 {
     "variables": 
     {
-        "PACKER_OS_FLAVOUR": "ubuntu",
-        "PACKER_BOX_NAME": "ubuntu-14.04.3-server-amd64",
-        "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "PACKER_OS_FLAVOUR"    : "ubuntu",
+        "PACKER_BOX_NAME"      : "ubuntu-14.04.3-server-amd64",
+        "AWS_ACCESS_KEY_ID"    : "{{env `AWS_ACCESS_KEY_ID`}}",
         "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-        "ATLAS_TOKEN": "{{env `ATLAS_TOKEN`}}",
-        "ATLAS_USERNAME": "{{env `ATLAS_USERNAME`}}",
-        "ATLAS_NAME": "{{env `ATLAS_NAME`}}"
+        "ATLAS_TOKEN"          : "{{env `ATLAS_TOKEN`}}",
+        "ATLAS_USERNAME"       : "{{env `ATLAS_USERNAME`}}",
+        "ATLAS_NAME"           : "{{env `ATLAS_NAME`}}",
+        "ssh_user"             : "ubuntu"
     },
 
     "builders": [
     {
-        "type": "amazon-ebs",
-        "access_key": "{{ user `AWS_ACCESS_KEY_ID` }}",
-        "secret_key"  : "{{ user `AWS_SECRET_ACCESS_KEY` }}",
-        "region"          : "us-east-1",
-        "source_ami" : "ami-10b68a78",
+        "type"          : "amazon-ebs",
+        "access_key"    : "{{ user `AWS_ACCESS_KEY_ID` }}",
+        "secret_key"    : "{{ user `AWS_SECRET_ACCESS_KEY` }}",
+        "region"        : "us-east-1",
+        "source_ami"    : "ami-10b68a78",
         "instance_type" : "t1.micro",
-        "ssh_username" : "ubuntu",
-        "ami_name": "culturely {{timestamp}}"
+        "ssh_username"  : "ubuntu",
+        "ssh_timeout"   : "10m",
+        "ami_name"      : "zerodwontime {{timestamp}}"
     }
 
     ],
 
     "provisioners": [
     {
-        "type": "shell",
-        "script" : "scripts/provisioner.sh"
+        "type"            : "shell",
+        "execute_command" : "{{ .Vars }} sudo  -E -S bash -c '{{ .Path }}'",
+        "script"          : "scripts/provisioner.sh"
     },
 
     {
-        "type": "puppet-masterless",
+        "type"         : "puppet-masterless",
         "manifest_file": "puppet/manifests/site.pp",
-        "module_paths": ["puppet/modules"]
+        "module_paths" : ["puppet/modules"]
     }
 
     ],
 
     "post-processors":[
     {
-        "type": "atlas",
-        "artifact": "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+        "type"          : "atlas",
+        "artifact"      : "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
         "artifact_type" : "amazon.ami",
         "metadata": {
             "created_at": "{{timestamp}}"
