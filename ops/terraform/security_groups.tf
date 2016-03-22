@@ -2,9 +2,8 @@
 # Security group(s)
 #--------------------------------------------------------------
 resource "aws_security_group" "default" {
-	name        = "default-zero"
 	description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
-	vpc_id	    = "{aws_vpc.zero.id}"
+	vpc_id	    = "${aws_vpc.zero_vpc.id}"
 
 	ingress {
 		from_port = 0
@@ -27,9 +26,8 @@ resource "aws_security_group" "default" {
 }
 
 resource "aws_security_group" "web-ssh" {
-	name 		= "web-ssh"
 	description = "allow access to the web and ssh"
-	vpc_id 		= "{aws_vpc.zero.id}"
+	vpc_id 		= "${aws_vpc.zero_vpc.id}"
 
 	ingress {
 		from_port = 22
