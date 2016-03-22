@@ -7,7 +7,7 @@
         "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
         "ATLAS_TOKEN"          : "{{env `ATLAS_TOKEN`}}",
         "ATLAS_USERNAME"       : "{{env `ATLAS_USERNAME`}}",
-        "ATLAS_NAME"           : "{{env `ATLAS_NAME`}}",
+        "ATLAS_NAME"           : "ZeroImage",
         "ssh_user"             : "ubuntu"
     },
 
@@ -21,7 +21,7 @@
         "instance_type" : "t1.micro",
         "ssh_username"  : "ubuntu",
         "ssh_timeout"   : "10m",
-        "ami_name"      : "zerodwontime {{timestamp}}"
+        "ami_name"      : "ZerodImage {{timestamp}}"
     }
 
     ],
@@ -53,7 +53,7 @@
         "artifact_type" : "amazon.ami",
         "metadata": {
             "created_at": "{{timestamp}}"
-            }
+        }
     }
 
     ],
