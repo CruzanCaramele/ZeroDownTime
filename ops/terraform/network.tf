@@ -68,7 +68,7 @@ resource "aws_route_table_association" "public" {
 #--------------------------------------------------------------
 # elb
 #--------------------------------------------------------------
-resource "aws_elb" "load_balancer" {
+resource "aws_elb" "ZeroBalancer" {
 	subnets         = ["${aws_subnet.public.id}"]
 	security_groups = ["${aws_security_group.web.id}"]
 
@@ -97,7 +97,7 @@ resource "aws_elb" "load_balancer" {
 # proxy protocol policy							
 #--------------------------------------------------------------
 resource "aws_proxy_protocol_policy" "http" {
-	load_balancer  = "${aws_elb.load_balancer.name}"
+	load_balancer  = "${aws_elb.ZeroBalancer.name}"
 	instance_ports = ["80"] 
 
 	lifecycle {
