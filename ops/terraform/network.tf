@@ -2,9 +2,9 @@
 # VPC Networking
 #--------------------------------------------------------------
 resource "aws_vpc" "zero_vpc" {
-	cidr_block         = "10.0.0.0/16"
-	enable_dns_support = true
-	enable_hostnames   = true
+	cidr_block             = "10.0.0.0/16"
+	enable_dns_support     = true
+	enable_dns_hostnames   = true
 
 	tags {
 		Name = "zero_vpc"
@@ -18,7 +18,7 @@ resource "aws_vpc" "zero_vpc" {
 resource "aws_subnet" "public" {
 	vpc_id                  = "${aws_vpc.zero_vpc.id}"
 	cidr_block              = "10.0.23.0/24"
-	availaibility_zone      = "us-east-1a"
+	availability_zone       = "us-east-1a"
 	map_public_ip_on_launch = true 
 
 	tags {
@@ -70,7 +70,7 @@ resource "aws_route_table_association" "public" {
 #--------------------------------------------------------------
 resource "aws_elb" "ZeroBalancer" {
 	subnets         = ["${aws_subnet.public.id}"]
-	security_groups = ["${aws_security_group.web.id}"]
+	security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web-ssh.id}"]
 
 	listener {
 		instance_port     = 80
@@ -87,7 +87,7 @@ resource "aws_elb" "ZeroBalancer" {
 		interval 			= 30
 	}
 
-	instances = ["${aws_instance.zero-down-time.id}"]
+	instances = ["${aws_instance.zero-down-time.*.id}"]
 
 	lifecycle {
 		create_before_destroy = true
@@ -96,11 +96,11 @@ resource "aws_elb" "ZeroBalancer" {
 #--------------------------------------------------------------
 # proxy protocol policy							
 #--------------------------------------------------------------
-resource "aws_proxy_protocol_policy" "http" {
-	load_balancer  = "${aws_elb.ZeroBalancer.name}"
-	instance_ports = ["80"] 
+# resource "aws_proxy_protocol_policy" "http" {
+# 	load_balancer  = "${aws_elb.ZeroBalancer.name}"
+# 	instance_ports = ["80"] 
 
-	lifecycle {
-		create_before_destroy = true
-	}
-}
+# 	lifecycle {
+# 		create_before_destroy = true
+# 	}
+# }
