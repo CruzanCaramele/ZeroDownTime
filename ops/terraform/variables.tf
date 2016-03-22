@@ -1,7 +1,7 @@
 variable "aws_access_key" {
-	default = ""
+	default = "{{env `AWS_ACCESS_KEY_ID`}}"
 }
 
 variable "aws_secret_key" {
-	default = ""
+	default = "{{env `AWS_SECRET_ACCESS_KEY`}}"
 }
