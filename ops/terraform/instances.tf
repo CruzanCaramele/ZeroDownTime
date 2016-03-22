@@ -3,7 +3,7 @@
 #--------------------------------------------------------------
 provider "aws" {
 	access_key = "${var.aws_access_key}"
-	secret_key = "${var.aws_secret-Key}"
+	secret_key = "${var.aws_secret_key}"
 	region     = "us-east-1"
 }
 
@@ -21,7 +21,7 @@ resource "atlas_artifact" "ZeroImage" {
 #--------------------------------------------------------------
 module "ssh_keys" {
 	source = "./ssh_keys"
-	name   = "ZeroKey"
+	name   = "Zero-key"
 }
 
 #--------------------------------------------------------------
@@ -32,7 +32,7 @@ resource "aws_instance" "zero-down-time" {
 	key_name               = "${module.ssh_keys.key_name}"
 	instance_type          = "t1.micro"
 	subnet_id              = "${aws_subnet.public.id}"
-	vpc_security_group_ids = ["${aws_security_group.default.id}, ${aws_security_group.web-ssh.id}"]
+	vpc_security_group_ids = ["${aws_security_group.default.id}", "${aws_security_group.web-ssh.id}"]
 	depends_on             = ["aws_internet_gateway.gateway"]
 
 	count = 2
