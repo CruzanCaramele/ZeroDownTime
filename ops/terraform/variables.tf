@@ -1,11 +1,14 @@
 variable "aws_access_key" {
-	default = "{{env `AWS_ACCESS_KEY_ID`}}"
+	description = "aws access key , obtain from environment"
+	default     = "{{env `AWS_ACCESS_KEY_ID`}}"
 }
 
 variable "aws_secret_key" {
-	default = "{{env `AWS_SECRET_ACCESS_KEY`}}"
+	description = "aws secret key , obtain from environment"
+	default     = "{{env `AWS_SECRET_ACCESS_KEY`}}"
 }
 
 variable "key_name" {
-	default = "Zero-key"
+	description = "name of private key"
+	default     = "Zero-key"
 }
