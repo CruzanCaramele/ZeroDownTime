@@ -30,12 +30,9 @@
     {
         "type"            : "shell",
         "execute_command" : "{{ .Vars }} sudo  -E -S bash -c '{{ .Path }}'",
-        "script"          : "scripts/provisioner.sh"
-    },
-
-    {
-        "type"   : "shell",
-        "inline" : ["sudo apt-get -y install git"]
+        "scripts"          : ["scripts/update.sh",
+                              "scripts/provisioner.sh"
+                             ]
     },
 
     {
