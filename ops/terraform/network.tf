@@ -42,7 +42,7 @@ resource "aws_route_table" "public" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 
 	lifecycle {
-		create_before_destroy
+		create_before_destroy = true
 	}
 }
 
