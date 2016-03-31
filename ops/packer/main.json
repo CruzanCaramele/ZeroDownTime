@@ -13,41 +13,41 @@
 
     "builders": [
     {
-        "type"          : "amazon-ebs",
-        "access_key"    : "{{ user `AWS_ACCESS_KEY_ID` }}",
-        "secret_key"    : "{{ user `AWS_SECRET_ACCESS_KEY` }}",
-        "region"        : "us-east-1",
-        "source_ami"    : "ami-10b68a78",
-        "instance_type" : "t1.micro",
-        "ssh_username"  : "ubuntu",
-        "ssh_timeout"   : "10m",
-        "ami_name"      : "ZerodImage {{timestamp}}"
+        "type"                 : "amazon-ebs",
+        "access_key"           : "{{ user `AWS_ACCESS_KEY_ID` }}",
+        "secret_key"           : "{{ user `AWS_SECRET_ACCESS_KEY` }}",
+        "region"               : "us-east-1",
+        "source_ami"           : "ami-10b68a78",
+        "instance_type"        : "t1.micro",
+        "ssh_username"         : "ubuntu",
+        "ssh_timeout"          : "10m",
+        "ami_name"             : "ZerodImage {{timestamp}}"
     }
 
     ],
 
     "provisioners": [
     {
-        "type"            : "shell",
-        "execute_command" : "{{ .Vars }} sudo  -E -S bash -c '{{ .Path }}'",
-        "scripts"          : ["scripts/update.sh",
-                              "scripts/provisioner.sh"
-                             ]
+        "type"                 : "shell",
+        "execute_command"      : "{{ .Vars }} sudo  -E -S bash -c '{{ .Path }}'",
+        "scripts"              : ["scripts/update.sh",
+                                 "scripts/provisioner.sh"
+                                 ]
     },
 
     {
-        "type"         : "puppet-masterless",
-        "manifest_file": "puppet/manifests/site.pp",
-        "module_paths" : ["puppet/modules"]
+        "type"                 : "puppet-masterless",
+        "manifest_file"        : "puppet/manifests/site.pp",
+        "module_paths"         : ["puppet/modules"]
     }
 
     ],
 
     "post-processors":[
     {
-        "type"          : "atlas",
-        "artifact"      : "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
-        "artifact_type" : "amazon.ami",
+        "type"                 : "atlas",
+        "artifact"             : "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+        "artifact_type"        : "amazon.ami",
         "metadata": {
             "created_at": "{{timestamp}}"
         }
@@ -57,7 +57,7 @@
 
     "push" :
     {
-    	"name": "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
-    	"vcs" : false
+    	"name"                  : "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+    	"vcs"                   : false
     }
 }
