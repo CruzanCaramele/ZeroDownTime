@@ -93,6 +93,18 @@ resource "aws_subnet" "private" {
 	}
 }
 
+resource "aws_route_table" "private_table" {
+	vpc_id = "${aws_vpc.zero_vpc.id}"
+
+	route {
+		cidr_block = "0.0.0.0/0"
+	}
+
+	lifecycle {
+		create_before_destroy = true
+	}
+}
+
 #--------------------------------------------------------------
 # elb
 #--------------------------------------------------------------
