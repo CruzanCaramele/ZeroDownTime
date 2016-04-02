@@ -33,7 +33,7 @@ resource "aws_instance" "zero-down-time" {
 	instance_type          = "t1.micro"
 	subnet_id              = "${aws_subnet.public.id}"
 	monitoring			   = true
-	vpc_security_group_ids = ["${aws_security_group.default.id}", "${aws_security_group.web-ssh.id}"]
+	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}"]
 	depends_on             = ["aws_internet_gateway.gateway"]
 
 	count = 2

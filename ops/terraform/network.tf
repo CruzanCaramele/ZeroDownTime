@@ -70,7 +70,7 @@ resource "aws_route_table_association" "public" {
 #--------------------------------------------------------------
 resource "aws_elb" "ZeroBalancer" {
 	subnets         = ["${aws_subnet.public.id}"]
-	security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web-ssh.id}"]
+	security_groups = ["${aws_security_group.web-ssh.id}"]
 
 	listener {
 		instance_port     = 80
@@ -87,7 +87,8 @@ resource "aws_elb" "ZeroBalancer" {
 		interval 			= 30
 	}
 
-	instances = ["${aws_instance.zero-down-time.*.id}"]
+	cross_zone_load_balancing = true
+	instances                 = ["${aws_instance.zero-down-time.*.id}"]
 
 	lifecycle {
 		create_before_destroy = true
