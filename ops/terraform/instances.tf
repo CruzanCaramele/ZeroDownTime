@@ -31,7 +31,7 @@ resource "aws_instance" "zero-down-time" {
 	ami                    = "${atlas_artifact.ZeroImage.metadata_full.ami_id}"
 	key_name               = "${module.ssh_keys.key_name}"
 	instance_type          = "t1.micro"
-	subnet_id              = "${aws_subnet.public.id}"
+	subnet_id              = "${aws_subnet.private_subnet.id}"
 	monitoring			   = true
 	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}"]
 	depends_on             = ["aws_internet_gateway.gateway"]
