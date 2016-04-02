@@ -15,9 +15,23 @@ resource "aws_vpc" "zero_vpc" {
 	}
 }
 
+#--------------------------------------------------------------
+# Internet Gateway
+#--------------------------------------------------------------
+resource "aws_internet_gateway" "gateway" {
+	vpc_id = "${aws_vpc.zero_vpc.id}"
+
+	lifecycle {
+		create_before_destroy = true
+	}
+}
+
+#--------------------------------------------------------------
+# Public Subnet
+#--------------------------------------------------------------
 resource "aws_subnet" "public" {
 	vpc_id                  = "${aws_vpc.zero_vpc.id}"
-	cidr_block              = "10.0.23.0/24"
+	cidr_block              = "10.0.1.0/24"
 	availability_zone       = "us-east-1a"
 	map_public_ip_on_launch = true 
 
@@ -30,26 +44,13 @@ resource "aws_subnet" "public" {
 	}
 }
 
-resource "aws_internet_gateway" "gateway" {
-	vpc_id = "${aws_vpc.zero_vpc.id}"
-
-	lifecycle {
-		create_before_destroy = true
-	}
-}
-
 resource "aws_route_table" "public" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 
-	lifecycle {
-		create_before_destroy = true
+	route {
+		cidr_block = "0.0.0.0./0"
+		gateway_id = "${aws_internet_gateway.gateway.id}"
 	}
-}
-
-resource "aws_route" "public_internet_gateway" {
-	route_table_id         = "${aws_route_table.public.id}"
-	destination_cidr_block = "0.0.0.0/0"
-	gateway_id			   = "${aws_internet_gateway.gateway.id}"
 
 	lifecycle {
 		create_before_destroy = true
@@ -59,6 +60,33 @@ resource "aws_route" "public_internet_gateway" {
 resource "aws_route_table_association" "public" {
 	subnet_id      = "${aws_subnet.public.id}"
 	route_table_id = "${aws_route_table.public.id}"
+
+	lifecycle {
+		create_before_destroy = true
+	}
+}
+
+#--------------------------------------------------------------
+# ELB Public subnet
+#--------------------------------------------------------------
+# resource "aws_subnet" "elb_public" {
+# 	vpc_id     = "${aws_vpc.zero_vpc.id}"
+# 	cidr_block =  "10.0.3.0/24"
+# }
+
+# resource ""
+
+#--------------------------------------------------------------
+# Private subnet for instances
+#--------------------------------------------------------------
+resource "aws_subnet" "private" {
+	vpc_id = "${aws_vpc.zero_vpc.id}"
+	cidr_block = "10.0.2.0/24"
+	availability_zone = "us-east-1a"
+
+	tags {
+		Name = "zero_private_subnet"
+	}
 
 	lifecycle {
 		create_before_destroy = true
@@ -87,8 +115,10 @@ resource "aws_elb" "ZeroBalancer" {
 		interval 			= 30
 	}
 
-	cross_zone_load_balancing = true
-	instances                 = ["${aws_instance.zero-down-time.*.id}"]
+	connection_draining         = true
+	connection_draining_timeout = 300
+	cross_zone_load_balancing   = true
+	instances                   = ["${aws_instance.zero-down-time.*.id}"]
 
 	lifecycle {
 		create_before_destroy = true
