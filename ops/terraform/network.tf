@@ -79,7 +79,7 @@ resource "aws_route_table_association" "public" {
 #--------------------------------------------------------------
 # Private subnet for instances
 #--------------------------------------------------------------
-resource "aws_subnet" "private" {
+resource "aws_subnet" "private_subnet" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 	cidr_block = "10.0.2.0/24"
 	availability_zone = "us-east-1a"
@@ -93,7 +93,7 @@ resource "aws_subnet" "private" {
 	}
 }
 
-resource "aws_route_table" "private_table" {
+resource "aws_route_table" "private_subnet_table" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 
 	route {
@@ -104,6 +104,12 @@ resource "aws_route_table" "private_table" {
 		create_before_destroy = true
 	}
 }
+
+resource "aws_route_table_association" "private_table_association" {
+	subnet_id      = "${aws_subnet.private_subnet.id}"
+	route_table_id = "${aws_route_table.private_subnet_table.id}"
+}
+
 
 #--------------------------------------------------------------
 # elb
