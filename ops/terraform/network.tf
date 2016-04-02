@@ -48,7 +48,7 @@ resource "aws_route_table" "public" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 
 	route {
-		cidr_block = "0.0.0.0./0"
+		cidr_block = "0.0.0.0/0"
 		gateway_id = "${aws_internet_gateway.gateway.id}"
 	}
 
@@ -97,7 +97,8 @@ resource "aws_route_table" "private_subnet_table" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 
 	route {
-		cidr_block = "0.0.0.0/0"
+		cidr_block  = "0.0.0.0/0"
+		instance_id = "${aws_instance.zero-down-time.*.id}" 
 	}
 
 	lifecycle {
@@ -108,6 +109,10 @@ resource "aws_route_table" "private_subnet_table" {
 resource "aws_route_table_association" "private_table_association" {
 	subnet_id      = "${aws_subnet.private_subnet.id}"
 	route_table_id = "${aws_route_table.private_subnet_table.id}"
+
+	lifecycle {
+		create_before_destroy = true
+	}
 }
 
 
