@@ -44,6 +44,21 @@ resource "aws_subnet" "public" {
 	}
 }
 
+resource "aws_subnet" "elb_public" {
+	vpc_id                  = "${aws_vpc.zero_vpc.id}"
+	cidr_block              = "10.0.3.0/24"
+	availability_zone       = "us-east-1c"
+	map_public_ip_on_launch = true 
+
+	tags {
+		Name = "zero_public_subnet"
+	}
+
+	lifecycle {
+		create_before_destroy = true
+	}
+}
+
 resource "aws_route_table" "public" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
 
@@ -66,15 +81,15 @@ resource "aws_route_table_association" "public" {
 	}
 }
 
-#--------------------------------------------------------------
-# ELB Public subnet
-#--------------------------------------------------------------
-# resource "aws_subnet" "elb_public" {
-# 	vpc_id     = "${aws_vpc.zero_vpc.id}"
-# 	cidr_block =  "10.0.3.0/24"
-# }
+resource "aws_route_table_association" "elb_public" {
+	subnet_id      = "${aws_subnet.elb_public.id}"
+	route_table_id = "${aws_route_table.public.id}"
 
-# resource ""
+	lifecycle {
+		create_before_destroy = true
+	}
+}
+
 
 #--------------------------------------------------------------
 # Private subnet for instances
@@ -98,7 +113,8 @@ resource "aws_route_table" "private_subnet_table" {
 
 	route {
 		cidr_block  = "0.0.0.0/0"
-		instance_id = "${aws_instance.zero-down-time.*.id}" 
+		instance_id = "${aws_instance.zero-down-time.id}"
+		#instance_id = "${element(aws_instance.zero-down-time.*.id, count.index)}"
 	}
 
 	lifecycle {
@@ -120,7 +136,7 @@ resource "aws_route_table_association" "private_table_association" {
 # elb
 #--------------------------------------------------------------
 resource "aws_elb" "ZeroBalancer" {
-	subnets         = ["${aws_subnet.public.id}"]
+	subnets         = ["${aws_subnet.public.id}", "${aws_subnet.elb_public.id}"]
 	security_groups = ["${aws_security_group.web-ssh.id}"]
 
 	listener {
@@ -141,7 +157,7 @@ resource "aws_elb" "ZeroBalancer" {
 	connection_draining         = true
 	connection_draining_timeout = 300
 	cross_zone_load_balancing   = true
-	instances                   = ["${aws_instance.zero-down-time.*.id}"]
+	instances                   = ["${aws_instance.zero-down-time.id}"]
 
 	lifecycle {
 		create_before_destroy = true
