@@ -12,3 +12,8 @@ variable "key_name" {
 	description = "name of private key"
 	default     = "Zero-key"
 }
+
+variable "public_subnets" {
+	description = "public subnets cidrs"
+	default     = "10.0.1.0/24,10.0.3.0/24"
+}
