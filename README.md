@@ -11,7 +11,7 @@ Tools should simplify methods and methods in turn should encourage learning in t
 #### Infrastructure Design Overview
 The Application Infrastructure built in this project is designed for fault tolerance and high availablity.
 
-![Delivery Flow](/graph.jpg){:height="800px" width="2000px"}.
+<img src="graph.jpg" alt="Infrastructure" style="width: 2000px;" "height: 800px;"/>
 
 
 
