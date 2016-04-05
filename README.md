@@ -9,9 +9,9 @@ Tools should simplify methods and methods in turn should encourage learning in t
 
 
 #### Infrastructure Design Overview
-The Infrastructure built in this project is designed for fault tolerance and high availablity.
+The Application Infrastructure built in this project is designed for fault tolerance and high availablity.
 
-![Delivery Flow](/graph.jpg)
+![Delivery Flow](/graph.jpg){:height="800px" width="2000px"}
 
 
 
