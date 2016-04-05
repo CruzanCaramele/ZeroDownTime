@@ -129,8 +129,8 @@ resource "aws_elb" "ZeroBalancer" {
 		interval 			= 30
 	}
 
-	connection_draining         = true
-	connection_draining_timeout = 300
+	#connection_draining         = true
+	#connection_draining_timeout = 300
 	cross_zone_load_balancing   = true
 	instances                   = ["${aws_instance.zero-down-time.*.id}"]
 
