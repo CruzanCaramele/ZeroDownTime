@@ -43,6 +43,13 @@ resource "aws_autoscaling_group" "scaling_group" {
 # Auto Scaling Group Policy(ies)
 #--------------------------------------------------------------
 resource "aws_autoscaling_policy" "scaling_policy" {
-	name = "scaling_policy"
-	
+	name                   = "scaling_policy"
+	scaling_adjustment     = 1
+	adjustment_type        = "ChangeInCapacity"
+	cooldown               = 300
+	autoscaling_group_name = "${aws_autoscaling_group.scaling_group.name}"
 }
+
+#--------------------------------------------------------------
+# Cloud-Watch Metric Alarm
+#--------------------------------------------------------------
