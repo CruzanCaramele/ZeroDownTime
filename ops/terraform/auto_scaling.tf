@@ -23,7 +23,7 @@ resource "aws_launch_configuration" "scale_config" {
 #--------------------------------------------------------------
 # Auto Scaling Group
 #--------------------------------------------------------------
-resource "aws_auto_scaling_group" "scaling_group" {
+resource "aws_autoscaling_group" "scaling_group" {
 	name                	  = "scaling_group"
 	availability_zones  	  = ["us-east-1a"]
 	min_size            	  = 2
@@ -37,4 +37,12 @@ resource "aws_auto_scaling_group" "scaling_group" {
 	lifecycle {
 		create_before_destroy = true
 	}
+}
+
+#--------------------------------------------------------------
+# Auto Scaling Group Policy(ies)
+#--------------------------------------------------------------
+resource "aws_autoscaling_policy" "scaling_policy" {
+	name = "scaling_policy"
+	
 }
