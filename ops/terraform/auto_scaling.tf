@@ -10,5 +10,6 @@
 resource "aws_launch_configuration" "scale_config" {
 	name          = "web_servers_scale"
 	image_id      = "${atlas_artifact.ZeroImage.metadata_full.ami_id}"
-	instance_type = "t1.micro" 
+	instance_type = "t1.micro"
+	key_name      = "${module.ssh_keys.key_name}" 
 }
