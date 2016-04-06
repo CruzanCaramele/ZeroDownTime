@@ -1,9 +1,3 @@
-# - create launch configuration (information about the instance and AMI to be launched)
-# - create auto scaling group
-# - create auto scaling policies (makes the elasticity occure, i.e scale out or scale down), 
-		# set increase group size and  create alarm
-		# set decrease group size
-
 #--------------------------------------------------------------
 # Launch Configuration
 #--------------------------------------------------------------
@@ -48,10 +42,14 @@ resource "aws_autoscaling_policy" "scaling_policy" {
 	adjustment_type        = "ChangeInCapacity"
 	cooldown               = 300
 	autoscaling_group_name = "${aws_autoscaling_group.scaling_group.name}"
+
+	lifecycle {
+		create_before_destroy = true
+	}
 }
 
 #--------------------------------------------------------------
-# Cloud-Watch Metric Alarm
+# Cloud-Watch Metric Alarm (triggers scaling policy)
 #--------------------------------------------------------------
 resource "aws_cloudwatch_metric_alarm" "scaling_alarm" {
 	alarm_name          = "scaling_alarm"
