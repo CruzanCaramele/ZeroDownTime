@@ -11,7 +11,7 @@ Tools should simplify methods and methods in turn should encourage learning in t
 #### Infrastructure Design Overview
 The Application Infrastructure built in this project is designed for fault tolerance and high availablity.
 
-<img src="graph.jpg" alt="Infrastructure" style="width: 2000px;" "height: 800px;"/>
+![Graph](static/graph.jpg)
 
 
 
@@ -47,7 +47,7 @@ These are the methods implemented in this project and the tools that help achiev
 
 ### Delivery Pipeline and Image Deploys Process
 
-![Delivery Flow](/workflow.jpg)
+![Delivery Flow](static/workflow.jpg)
 
 Packer runs in Atlas to build the application AMI which is provisioned and configured using Puppet. This creates an  artifact that is stored in [Atlas](https://atlas.hashicorp.com). 
 
