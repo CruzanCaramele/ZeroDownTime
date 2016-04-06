@@ -67,6 +67,10 @@ resource "aws_cloudwatch_metric_alarm" "scaling_alarm" {
 		AutoScalingGroupName = "${aws_autoscaling_group.scaling_group.name}"
 	}
 
-	alarm_description = "This metric monitor ec2 cpu utilization"
-	alarm_actions = ["${aws_autoscaling_policy.scaling_policy.arn}"]
+	alarm_description = "This metric monitors ec2 cpu utilization"
+	alarm_actions     = ["${aws_autoscaling_policy.scaling_policy.arn}"]
+
+	lifecycle {
+		create_before_destroy = true
+	}
 }
