@@ -1,1 +1,1 @@
-![Packer](packer.jpg)   		 		![Plus](plus.jpg)  		  		![Puppet](puppet.jpg)
+![Packer](static/packer.jpg)   		 		![Plus](static/plus.jpg)  		  		![Puppet](static/puppet.jpg)
