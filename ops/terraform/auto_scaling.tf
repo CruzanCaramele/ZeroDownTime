@@ -53,3 +53,20 @@ resource "aws_autoscaling_policy" "scaling_policy" {
 #--------------------------------------------------------------
 # Cloud-Watch Metric Alarm
 #--------------------------------------------------------------
+resource "aws_cloudwatch_metric_alarm" "scaling_alarm" {
+	alarm_name          = "scaling_alarm"
+	comparison_operator = "GreaterThanOrEqualToThreshold"
+	evaluation_periods  = "2"
+	metric_name         = "CPUUtilization"
+	namespace           = "AWS/EC2"
+	period              = 120
+	statistic           = "Average"
+	threshold           = 80
+
+	dimensions {
+		AutoScalingGroupName = "${aws_autoscaling_group.scaling_group.name}"
+	}
+
+	alarm_description = "This metric monitor ec2 cpu utilization"
+	alarm_actions = ["${aws_autoscaling_policy.scaling_policy.arn}"]
+}
