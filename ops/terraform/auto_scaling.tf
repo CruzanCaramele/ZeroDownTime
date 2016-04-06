@@ -24,10 +24,17 @@ resource "aws_launch_configuration" "scale_config" {
 # Auto Scaling Group
 #--------------------------------------------------------------
 resource "aws_auto_scaling_group" "scaling_group" {
-	name                = "scaling_group"
-	availability_zones  = ["us-east-1a"]
-	min_size            = 2
-	max_size	   	    = 5
-	vpc_zone_identifier = ["${aws_subnet.private_subnet.id}"]
-	load_balancers      = ["${aws_elb.ZeroBalancer.name}"]
+	name                	  = "scaling_group"
+	availability_zones  	  = ["us-east-1a"]
+	min_size            	  = 2
+	max_size	   	    	  = 5
+	vpc_zone_identifier 	  = ["${aws_subnet.private_subnet.id}"]
+	load_balancers      	  = ["${aws_elb.ZeroBalancer.name}"]
+	health_check_type         = "ELB"
+	health_check_grace_period = 300
+	launch_configuration      = "${aws_launch_configuration.scale_config.name}"
+
+	lifecycle {
+		create_before_destroy = true
+	}
 }
