@@ -36,7 +36,7 @@ resource "aws_instance" "zero-down-time" {
 	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}"]
 	depends_on             = ["aws_internet_gateway.gateway"]
 
-	count = 2
+	count = 1
 
 	lifecycle {
 		create_before_destroy = true
