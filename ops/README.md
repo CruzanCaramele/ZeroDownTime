@@ -23,4 +23,4 @@ This folder contains code for the infrastructure. The server(s) is launched on A
 | network.tf | AWS VPC , Elastic Load Balancer and other AWS networking resources all codified. |
 | variables.tf | Variables used in the infrastructure. |
 | nat.tf | NAT Gateway for the private instances. |
-| variables.tf | Variables used in the infrastructure. |
+| autoscaling.tf | Launch configuration and Auto-Scaling group. |
