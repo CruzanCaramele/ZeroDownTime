@@ -24,3 +24,4 @@ This folder contains code for the infrastructure. The server(s) is launched on A
 | variables.tf | Variables used in the infrastructure. |
 | nat.tf | NAT Gateway for the private instances. |
 | autoscaling.tf | Launch configuration and Auto-Scaling group. |
+| dnsrescord.tf | DNS Routing to ELB. |
