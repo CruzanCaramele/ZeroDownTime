@@ -15,3 +15,4 @@ vendor/
 .pub
 terraform.tfstate.backup
 .terraform
+.terraform.tfstate
