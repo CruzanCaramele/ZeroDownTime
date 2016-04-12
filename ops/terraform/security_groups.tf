@@ -139,3 +139,7 @@ resource "aws_security_group" "consul_security_group" {
         cidr_blocks = ["${var.source_cidr_block}"]
     }
 }
+
+#--------------------------------------------------------------
+# Security group - Zookeeper
+#--------------------------------------------------------------
