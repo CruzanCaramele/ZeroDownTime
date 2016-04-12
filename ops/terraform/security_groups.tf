@@ -57,7 +57,7 @@ resource "aws_security_group" "web-ssh" {
 #--------------------------------------------------------------
 resource "aws_security_group" "consul_security_group" {
     description = "Security Group for consul"
-    vpc_id = "${aws_vpc.zero_vpc.id}"
+    vpc_id      = "${aws_vpc.zero_vpc.id}"
 
     // allows traffic from the SG itself for tcp
     ingress {
@@ -143,11 +143,9 @@ resource "aws_security_group" "consul_security_group" {
 #--------------------------------------------------------------
 # Security group - Zookeeper
 #--------------------------------------------------------------
-// Security Group Resource for Module
-resource "aws_security_group" "main_security_group" {
-    name = "${var.security_group_name}"
-    description = "Security Group ${var.security_group_name}"
-    vpc_id = "${var.vpc_id}"
+resource "aws_security_group" "zookeeper_security_group" {
+    description = "Security Group for Zookeeper"
+    vpc_id      = "${var.zero_vpc.id}"
 
     // allows traffic from the SG itself for tcp
     ingress {
