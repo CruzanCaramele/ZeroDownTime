@@ -3,7 +3,6 @@
 # This bootstraps Puppet on Ubuntu 12.04 LTS.
 #
 # To try puppet 4 -->  PUPPET_COLLECTION=pc1 ./ubuntu.sh
-#
 set -e
 
 # Load up the release information
