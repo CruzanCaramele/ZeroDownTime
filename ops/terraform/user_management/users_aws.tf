@@ -40,3 +40,12 @@ resource "aws_iam_group_policy" "sudoersPolicy" {
 }
 EOF
 }
+
+#--------------------------------------------------------------
+# Sudo Group Memberships
+#--------------------------------------------------------------
+resource "aws_iam_group_membership" "sudoersMembers" {
+	name  = "sudoersMembers"
+	users = ["${aws_iam_user.sudoer.name}"]
+	group = "${aws_iam_group.sudoers.name}"
+}
