@@ -1,11 +1,18 @@
+#--------------------------------------------------------------
+# DB-Instance
+#--------------------------------------------------------------
 resource "aws_db_instance" "zero_database" {
-	allocated_storage    = 10
-	engine			     = "postgres"
-	engine_version       = "9.4.4"
-	instance_class       = "db.t1.micro"
-	name			     = "zerodb"
-	username             = "myusername"
-	password             = "mypassword"
-	db_subnet_group_name = "my_database_subent_group"
-	parameter_group_name = "default.postgres9.4"
+	allocated_storage      = 5
+	engine			       = "postgres"
+	multi_az			   = true
+	engine_version         = "9.4.7"
+	instance_class         = "db.t1.micro"
+	identifier             = "zerodbinstance"
+	name			       = "zeropgdatabase"
+	username               = "masterusername"
+	password               = "masterpassword"
+	port                   = 5432
+	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}", "${aws_security_group.consul_security_group.id}",
+							  "${aws_security_group.zookeeper_security_group.id}"]
+	db_subnet_group_name   = "${aws_subnet.private_subnet.id}"
 }
