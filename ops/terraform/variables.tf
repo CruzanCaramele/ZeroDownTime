@@ -15,5 +15,10 @@ variable "key_name" {
 
 variable "public_subnets" {
 	description = "public subnets cidrs"
-	default     = "10.0.1.0/24,10.0.3.0/24"
+	default     = "10.0.1.0/24"
+}
+
+variable "private_subnets" {
+	description = "private subnets cidrs for high availability"
+	default     = "10.0.2.0/24,10.0.3.0/24,10.0.4.0/24"
 }
