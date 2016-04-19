@@ -9,7 +9,7 @@ resource "aws_iam_user" "sudoer" {
 #--------------------------------------------------------------
 # Access_key
 #--------------------------------------------------------------
-resource "aws_iam_access_key" {
+resource "aws_iam_access_key" "sudoerKey" {
 	user = "${aws_iam_user.sudoer.name}"
 }
 
