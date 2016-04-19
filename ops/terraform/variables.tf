@@ -13,12 +13,17 @@ variable "key_name" {
 	default     = "Zero-key"
 }
 
-variable "public_subnets" {
+variable "public_cidrs" {
 	description = "public subnets cidrs"
-	default     = "10.0.1.0/24"
+	default     = "10.0.1.0/24,10.0.5.0/24,10.0.6.0/24"
 }
 
-variable "private_subnets" {
+variable "private_cidrs" {
 	description = "private subnets cidrs for high availability"
 	default     = "10.0.2.0/24,10.0.3.0/24,10.0.4.0/24"
+}
+
+variable "azs" {
+	description = "availability for resources"
+	default		= ""
 }
