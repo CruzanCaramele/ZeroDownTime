@@ -31,8 +31,9 @@ resource "aws_internet_gateway" "gateway" {
 #--------------------------------------------------------------
 resource "aws_subnet" "public" {
 	vpc_id                  = "${aws_vpc.zero_vpc.id}"
-	cidr_block              = "10.0.1.0/24"
-	availability_zone       = "us-east-1a"
+	cidr_block              = "${element(split(",", var.public_cidrs), count.index)}"
+	availability_zone       = "${element(split(",", var.azs), count.index)}"
+	count 			        = "${length(split(",", var.public_cidrs))}"
 	map_public_ip_on_launch = true 
 
 	tags {
@@ -58,7 +59,8 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-	subnet_id      = "${aws_subnet.public.id}"
+	count          = "${length(split(",", var.public_cidrs))}"
+	subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
 	route_table_id = "${aws_route_table.public.id}"
 
 	lifecycle {
@@ -71,8 +73,9 @@ resource "aws_route_table_association" "public" {
 #--------------------------------------------------------------
 resource "aws_subnet" "private_subnet" {
 	vpc_id            = "${aws_vpc.zero_vpc.id}"
-	cidr_block        = "10.0.2.0/24"
-	availability_zone = "us-east-1a"
+	cidr_block        = "${element(split(",", var.private_cidrs), count.index)}"
+	availability_zone = "${element(split(",", var.azs), count.index)}"
+	count 			  = "${length(split(",", var.private_cidrs))}"
 
 	tags {
 		Name = "zero_private_subnet"
@@ -85,6 +88,7 @@ resource "aws_subnet" "private_subnet" {
 
 resource "aws_route_table" "private_subnet_table" {
 	vpc_id = "${aws_vpc.zero_vpc.id}"
+	count  = "${length(split(",", var.private_cidrs))}"
 
 	route {
 		cidr_block     = "0.0.0.0/0"
@@ -98,13 +102,15 @@ resource "aws_route_table" "private_subnet_table" {
 }
 
 resource "aws_route_table_association" "private_table_association" {
-	subnet_id      = "${aws_subnet.private_subnet.id}"
-	route_table_id = "${aws_route_table.private_subnet_table.id}"
+	count          = "${length(split(",", var.private_cidrs))}"
+	subnet_id      = "${element(aws_subnet.private_subnet.*.id, count.index)}"
+	route_table_id = "${element(aws_route_table.private_subnet_table.*.id, count.index)}"
 
 	lifecycle {
 		create_before_destroy = true
 	}
 }
+
 
 
 #--------------------------------------------------------------
