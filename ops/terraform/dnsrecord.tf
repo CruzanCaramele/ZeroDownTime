@@ -17,6 +17,7 @@ resource "aws_route53_record" "db_record" {
 	zone_id = "${aws_route53_zone.db_zone.id}"
 	name    = "psql.database.com"
 	type    = "CNAME"
+	ttl     = "5"
 
 	records = [
 		"${aws_db_instance.zero_database.address}"
