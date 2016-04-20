@@ -69,7 +69,7 @@ resource "aws_route_table_association" "public" {
 }
 
 #--------------------------------------------------------------
-# Private subnet for instances
+# Private subnet for instance(s)
 #--------------------------------------------------------------
 resource "aws_subnet" "private_subnet" {
 	vpc_id            = "${aws_vpc.zero_vpc.id}"
