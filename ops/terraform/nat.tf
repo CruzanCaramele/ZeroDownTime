@@ -3,7 +3,6 @@
 #--------------------------------------------------------------
 resource "aws_eip" "nat_eip" {
 	vpc   = true
-	count = 1
 
 	lifecycle {
 		create_before_destroy = true
@@ -14,9 +13,8 @@ resource "aws_eip" "nat_eip" {
 # NAT Gateway
 #--------------------------------------------------------------
 resource "aws_nat_gateway" "nat_gateway" {
-	count         = 1
-	allocation_id = "${aws_eip.nat_eip.id}"
-	subnet_id     = "${aws_subnet.public.id}"
+	allocation_id = "${element(aws_eip.nat_eip.*.id, count.index)}"
+	subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
 	depends_on    = ["aws_internet_gateway.gateway"]
 
 	lifecycle {

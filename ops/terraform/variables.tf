@@ -15,15 +15,15 @@ variable "key_name" {
 
 variable "public_cidrs" {
 	description = "public subnets cidrs"
-	default     = "10.0.1.0/24,10.0.5.0/24,10.0.6.0/24"
+	default     = "10.139.101.0/24,10.139.102.0/24,10.139.103.0/24"
 }
 
 variable "private_cidrs" {
 	description = "private subnets cidrs for high availability"
-	default     = "10.0.2.0/24,10.0.3.0/24,10.0.4.0/24"
+	default     = "10.139.1.0/24,10.139.2.0/24,10.139.3.0/24"
 }
 
 variable "azs" {
 	description = "availability for resources"
-	default		= ""
+	default		= "us-east-1c,us-east-1a,us-east-1e"
 }

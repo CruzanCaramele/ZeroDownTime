@@ -23,5 +23,6 @@ resource "aws_db_instance" "zero_database" {
 resource "aws_db_subnet_group" "zero_db_subnet_group" {
 	name        = "postgres"
 	description = "subnet group for database"
-	subnet_ids  = ["${aws_subnet.private_subnet.id}"]
+	subnet_ids  = ["${aws_subnet.private_subnet.*.id}"]
+	#subnet_ids  = ["${split(",",aws_subnet.private_subnet.*.id)}"]
 }

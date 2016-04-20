@@ -80,7 +80,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 8300 (Server RPC)
@@ -88,7 +88,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8300
         to_port     = 8300
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 8301 (Serf LAN)
@@ -96,7 +96,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8301
         to_port     = 8301
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for UDP 8301 (Serf LAN)
@@ -104,7 +104,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8301
         to_port     = 8301
         protocol    = "udp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 8400 (Consul RPC)
@@ -112,7 +112,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8400
         to_port     = 8400
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 8500 (Consul Web UI)
@@ -120,7 +120,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8500
         to_port     = 8500
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 8600 (Consul DNS Interface)
@@ -128,7 +128,7 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8600
         to_port     = 8600
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for UDP 8600 (Consul DNS Interface)
@@ -136,7 +136,11 @@ resource "aws_security_group" "consul_security_group" {
         from_port   = 8600
         to_port     = 8600
         protocol    = "udp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    lifecycle {
+        create_before_destroy = true
     }
 }
 
@@ -145,7 +149,7 @@ resource "aws_security_group" "consul_security_group" {
 #--------------------------------------------------------------
 resource "aws_security_group" "zookeeper_security_group" {
     description = "Security Group for Zookeeper"
-    vpc_id      = "${var.zero_vpc.id}"
+    vpc_id      = "${aws_vpc.zero_vpc.id}"
 
     // allows traffic from the SG itself for tcp
     ingress {
@@ -168,7 +172,7 @@ resource "aws_security_group" "zookeeper_security_group" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 2181
@@ -176,7 +180,7 @@ resource "aws_security_group" "zookeeper_security_group" {
         from_port   = 2181
         to_port     = 2181
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 2888
@@ -184,7 +188,7 @@ resource "aws_security_group" "zookeeper_security_group" {
         from_port   = 2888
         to_port     = 2888
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
 
@@ -193,7 +197,7 @@ resource "aws_security_group" "zookeeper_security_group" {
         from_port   = 7199
         to_port     = 7199
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
     // allow traffic for TCP 3888
@@ -201,7 +205,10 @@ resource "aws_security_group" "zookeeper_security_group" {
         from_port   = 3888
         to_port     = 3888
         protocol    = "tcp"
-        cidr_blocks = ["${var.source_cidr_block}"]
+        cidr_blocks = ["0.0.0.0/0"]
     }
 
+    lifecycle {
+        create_before_destroy = true
+    }
 }

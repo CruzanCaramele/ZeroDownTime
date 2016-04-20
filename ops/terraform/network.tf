@@ -2,7 +2,7 @@
 # VPC
 #--------------------------------------------------------------
 resource "aws_vpc" "zero_vpc" {
-	cidr_block             = "10.0.0.0/16"
+	cidr_block             = "10.139.0.0/16"
 	enable_dns_support     = true
 	enable_dns_hostnames   = true
 
@@ -111,13 +111,11 @@ resource "aws_route_table_association" "private_table_association" {
 	}
 }
 
-
-
 #--------------------------------------------------------------
 # elb
 #--------------------------------------------------------------
 resource "aws_elb" "ZeroBalancer" {
-	subnets         = ["${aws_subnet.public.id}"]
+	subnets         = ["${element(aws_subnet.public.*.id, count.index)}"]
 	security_groups = ["${aws_security_group.web-ssh.id}", "${aws_security_group.consul_security_group.id}",
 					   "${aws_security_group.zookeeper_security_group.id}"]
 
