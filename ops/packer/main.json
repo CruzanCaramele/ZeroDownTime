@@ -31,7 +31,7 @@
         "type"                 : "shell",
         "execute_command"      : "{{ .Vars }} sudo  -E -S bash -c '{{ .Path }}'",
         "scripts"              : ["scripts/update.sh",
-                                 "scripts/provisioner.sh"
+                                 "scripts/provision.sh"
                                  ]
     },
 
