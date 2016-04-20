@@ -13,16 +13,14 @@ resource "aws_route53_zone" "db_zone" {
 #--------------------------------------------------------------
 # Route53 Record for db-instance
 #--------------------------------------------------------------
-resource "aws_route53_record" "www" {
-	zone_id = "{aws_route53_zone.primary.zone_id}"
-	name    = "example.com"
-	type    = "A"
+resource "aws_route53_record" "db_record" {
+	zone_id = "${aws_route53_zone.db_zone.id}"
+	name    = "psql.database.com"
+	type    = "CNAME"
 
-	alias {
-		name    			   = "${aws_elb.ZeroBalancer.dns_name}"
-		zone_id 			   = "${aws_elb.ZeroBalancer.zone_id}"
-		evaluate_target_health = true
-	}
+	records = [
+		"${aws_db_instance.zero_database.address}"
+	]
 
 	lifecycle {
 		create_before_destroy = true
