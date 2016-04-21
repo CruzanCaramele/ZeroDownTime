@@ -6,13 +6,21 @@ Though a single tool may empower methods such as infrastructure as code, continu
 
 Tools should simplify methods and methods in turn should encourage learning in the devops lifecycle.
 
+ZeroDowntime is :
 
+* **highly-available**: multi-availability zones
+* **secure**: instances in private subnets with nat gateway
 
 #### Infrastructure Design Overview
 The Application Infrastructure built in this project is designed for fault tolerance and high availablity.
 
-![Graph](static/graph.jpg)
+![Graph](static/Zero.png)
 
+
+
+#### Infrastructure Resource Dependency Diagram
+
+![Graph](static/graph.jpg)
 
 
 The aim of this project is to make use of industry standard tools to eliminate the window of time  when switching a node serving an application in the cloud from a currrent version to a new version. In a production environment, this is considered a down time when the node serving the application is unavailable to users. 
