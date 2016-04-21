@@ -16,3 +16,4 @@ vendor/
 terraform.tfstate.backup
 .terraform
 .terraform.tfstate
+terraform.tfstate
