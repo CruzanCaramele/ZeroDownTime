@@ -5,24 +5,31 @@ resource "aws_security_group" "web-ssh" {
 	description = "allow access to the web and ssh"
 	vpc_id 		= "${aws_vpc.zero_vpc.id}"
 
+    ingress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["10.139.101.0/24","10.139.102.0/24"]
+    }
+
 	ingress {
-		from_port = 22
-		to_port   = 22
-		protocol  = "tcp"
+		from_port   = 22
+		to_port     = 22
+		protocol    = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
 	}
 
 	ingress {
-		from_port = 80
-		to_port   = 80
-		protocol  = "tcp"
+		from_port   = 80
+		to_port     = 80
+		protocol    = "tcp"
 		cidr_blocks = ["0.0.0.0/0"] 
 	}
 
 	ingress {
-		from_port = 443
-		to_port   = 443
-		protocol  = "tcp"
+		from_port   = 443
+		to_port     = 443
+		protocol    = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
 	}
 
