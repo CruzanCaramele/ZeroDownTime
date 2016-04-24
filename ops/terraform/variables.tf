@@ -13,6 +13,11 @@ variable "key_name" {
 	default     = "Zero-key"
 }
 
+variable "private_key" {
+	description = "private key for bastion connections"
+	default     = "ssh_keys/Zero-key.pem"
+}
+
 variable "private_cidrs" {
 	description = "private subnets cidrs for high availability"
 	default     = "10.139.1.0/24,10.139.2.0/24"
