@@ -5,6 +5,10 @@ resource "aws_db_subnet_group" "zero_db_subnet_group" {
 	name        = "postgres"
 	description = "subnet group for database"
 	subnet_ids  = ["${aws_subnet.private_subnet.*.id}"]
+
+	lifecycle {
+		create_before_destroy = "true"
+	}
 }
 
 #--------------------------------------------------------------
@@ -24,4 +28,12 @@ resource "aws_db_instance" "zero_database" {
 	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}", "${aws_security_group.consul_security_group.id}",
 							  "${aws_security_group.zookeeper_security_group.id}"]
 	db_subnet_group_name   = "${aws_db_subnet_group.zero_db_subnet_group.name}"
+
+	tags {
+		Name = "database"
+	}
+
+	lifecycle {
+		create_before_destroy = true
+	}
 }
