@@ -137,7 +137,7 @@ resource "aws_elb" "ZeroBalancer" {
 	connection_draining         = true
 	connection_draining_timeout = 90
 	cross_zone_load_balancing   = true
-	#instances                   = ["${aws_instance.zero-down-time.*.id}"]
+	instances                   = ["${aws_instance.zero-down-time.*.id}"]
 
 	lifecycle {
 		create_before_destroy = true
