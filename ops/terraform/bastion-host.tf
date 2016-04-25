@@ -28,6 +28,14 @@ resource "aws_security_group" "bastion_security" {
 }
 
 #--------------------------------------------------------------
+# bastion - eip
+#--------------------------------------------------------------
+resource "aws_eip" "bastion_eip" {
+	instance = "${aws_instance.bastion_host.id}"
+	vpc      = true
+}
+
+#--------------------------------------------------------------
 # bastion - host
 #--------------------------------------------------------------
 resource "aws_instance" "bastion_host" {
@@ -36,7 +44,7 @@ resource "aws_instance" "bastion_host" {
 	subnet_id       = "${element(aws_subnet.public.*.id, count.index)}"
 	monitoring      = true
 	key_name        = "${module.ssh_keys.key_name}"
-	security_groups = ["${aws_security_group.bastion_security.id}"]
+	security_groups = ["${aws_security_group.bastion_security.id}", "${aws_security_group.default.id}"]
 	depends_on      = ["aws_internet_gateway.gateway"]
 	count           = 1
 
