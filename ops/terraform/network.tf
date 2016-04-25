@@ -116,8 +116,7 @@ resource "aws_route_table_association" "private_table_association" {
 #--------------------------------------------------------------
 resource "aws_elb" "ZeroBalancer" {
 	subnets         = ["${element(aws_subnet.public.*.id, count.index)}"]
-	security_groups = ["${aws_security_group.web-ssh.id}", "${aws_security_group.consul_security_group.id}",
-					   "${aws_security_group.zookeeper_security_group.id}"]
+	security_groups = ["${aws_security_group.default.id}"]
 
 	listener {
 		instance_port     = 80
