@@ -25,8 +25,7 @@ resource "aws_db_instance" "zero_database" {
 	username               = "masterusername"
 	password               = "masterpassword"
 	port                   = 5432
-	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}", "${aws_security_group.consul_security_group.id}",
-							  "${aws_security_group.zookeeper_security_group.id}"]
+	vpc_security_group_ids = ["${aws_security_group.default.id}"]
 	db_subnet_group_name   = "${aws_db_subnet_group.zero_db_subnet_group.name}"
 
 	tags {
