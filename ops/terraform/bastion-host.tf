@@ -1,10 +1,10 @@
 module "ami" {
 	source = "github.com/terraform-community-modules/tf_aws_ubuntu_ami"
-	region = "eu-central-1"
+	region = "us-east-1"
 	distribution = "trusty"
 	architecture = "amd64"
 	virttype = "hvm"
-	storagetype = "instance-store"
+	storagetype = "ebs"
 }
 
 #--------------------------------------------------------------
@@ -31,12 +31,14 @@ resource "aws_security_group" "bastion_security" {
 # bastion - host
 #--------------------------------------------------------------
 resource "aws_instance" "bastion_host" {
-	instance_type   = "t1.micro"
+	instance_type   = "t2.micro"
 	ami             = "${module.ami.ami_id}"
-	subnet_id       = "${aws_subnet.public.id}"
+	subnet_id       = "${element(aws_subnet.public.*.id, count.index)}"
 	monitoring      = true
 	key_name        = "${module.ssh_keys.key_name}"
 	security_groups = ["${aws_security_group.bastion_security.id}"]
+	depends_on      = ["aws_internet_gateway.gateway"]
+	count           = 1
 
 	tags {
 		Name = "bastion_host"
