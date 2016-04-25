@@ -30,14 +30,21 @@ module "ssh_keys" {
 resource "aws_instance" "zero-down-time" {
 	ami                    = "${atlas_artifact.ZeroImage.metadata_full.ami_id}"
 	instance_type          = "t1.micro"
+	key_name               = "${module.ssh_keys.key_name}"
 	availability_zone	   = "${element(split(",", var.azs), count.index)}"
 	subnet_id              = "${element(aws_subnet.private_subnet.*.id, count.index)}"
 	monitoring			   = true
-	vpc_security_group_ids = ["${aws_security_group.web-ssh.id}" , "${aws_security_group.consul_security_group.id}",
-	  						  "${aws_security_group.zookeeper_security_group.id}"]
+	vpc_security_group_ids = ["${aws_security_group.default.id}"]
 	depends_on             = ["aws_internet_gateway.gateway", "aws_db_instance.zero_database"]
 
 	count = 2
+
+	connection {
+		user         = "ubuntu"
+		private_key  = "${module.ssh_keys.private_key_path}"
+		bastion_host = "${aws_eip.bastion_eip.public_ip}"
+		bastion_key  = "${module.ssh_keys.private_key_path}"
+	}
 
 	tags {
 		Name = "web-server"
