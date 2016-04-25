@@ -37,7 +37,7 @@ resource "aws_instance" "zero-down-time" {
 	  						  "${aws_security_group.zookeeper_security_group.id}"]
 	depends_on             = ["aws_internet_gateway.gateway", "aws_db_instance.zero_database"]
 
-	count = 1
+	count = 2
 
 	tags {
 		Name = "web-server"
