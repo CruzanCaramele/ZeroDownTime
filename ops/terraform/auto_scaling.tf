@@ -7,7 +7,7 @@ resource "aws_launch_configuration" "scale_config" {
 	instance_type     = "t1.micro"
 	key_name          = "${module.ssh_keys.key_name}"
 	enable_monitoring = true
-	security_groups   = ["${aws_security_group.web-ssh.id}"]
+	security_groups   = ["${aws_security_group.default.id}"]
 
 	lifecycle {
 		create_before_destroy = true
