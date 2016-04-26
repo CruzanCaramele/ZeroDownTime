@@ -33,7 +33,7 @@ resource "aws_subnet" "public" {
 	vpc_id                  = "${aws_vpc.zero_vpc.id}"
 	cidr_block              = "${element(split(",", var.public_cidrs), count.index)}"
 	availability_zone       = "${element(split(",", var.azs), count.index)}"
-	count 			        = "${length(split(",", var.public_cidrs))}"
+	#count 			        = "${length(split(",", var.public_cidrs))}"
 	map_public_ip_on_launch = true 
 
 	tags {
@@ -93,7 +93,6 @@ resource "aws_route_table" "private_subnet_table" {
 	route {
 		cidr_block     = "0.0.0.0/0"
 		nat_gateway_id = "${aws_nat_gateway.nat_gateway.id}"
-		#instance_id = "${element(aws_instance.zero-down-time.*.id, count.index)}"
 	}
 
 	lifecycle {
