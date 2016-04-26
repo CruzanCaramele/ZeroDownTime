@@ -20,11 +20,11 @@ resource "aws_launch_configuration" "scale_config" {
 resource "aws_autoscaling_group" "scaling_group" {
 	name                	  = "scaling_group"
 	availability_zones  	  = ["${element(split(",", var.azs), count.index)}"]
-	min_size            	  = 2
+	min_size            	  = 1
 	max_size	   	    	  = 5
 	vpc_zone_identifier 	  = ["${element(aws_subnet.private_subnet.*.id, count.index)}"]
 	load_balancers      	  = ["${aws_elb.ZeroBalancer.name}"]
-	health_check_type         = "ELB"
+	health_check_type         = "EC2"
 	health_check_grace_period = 100
 	launch_configuration      = "${aws_launch_configuration.scale_config.name}"
 	depends_on                = ["aws_internet_gateway.gateway", "aws_db_instance.zero_database"]
