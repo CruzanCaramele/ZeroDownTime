@@ -1,0 +1,63 @@
+{
+	"variables":
+	{
+		"PACKER_OS_FLAVOUR"    : "ubuntu",
+		"PACKER_BOX_NAME"      : "ubuntu-14.04.3-server-amd64",
+		"AWS_ACCESS_KEY_ID"    : "{{env `AWS_ACCESS_KEY_ID`}}",
+		"AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+		"ATLAS_TOKEN"          : "{{env `ATLAS_TOKEN`}}",
+		"ATLAS_USERNAME"       : "{{env `ATLAS_USERNAME`}}",
+		"ATLAS_NAME"           : "BastionZeroImage",
+		"ssh_user"             : "ubuntu"
+	},
+
+    "builders": [
+    {
+        "type"                 : "amazon-ebs",
+        "access_key"           : "{{ user `AWS_ACCESS_KEY_ID` }}",
+        "secret_key"           : "{{ user `AWS_SECRET_ACCESS_KEY` }}",
+        "region"               : "us-east-1",
+        "source_ami"           : "ami-10b68a78",
+        "instance_type"        : "t1.micro",
+        "ssh_username"         : "ubuntu",
+        "ssh_timeout"          : "10m",
+        "ami_name"             : "BastionZerodImage {{timestamp}}"
+    }
+
+    ],
+
+    "provisioners": [
+    {
+        "type"                 : "shell",
+        "execute_command"      : "{{ .Vars }} sudo  -E -S bash -c '{{ .Path }}'",
+        "scripts"              : ["scripts/update.sh",
+                                 "scripts/provision.sh"
+                                 ]
+    },
+
+    {
+        "type"                 : "puppet-masterless",
+        "manifest_file"        : "puppet/manifests/bastion.pp",
+        "module_paths"         : ["puppet/modules"]
+    }
+
+    ],
+
+    "post-processors":[
+    {
+        "type"                 : "atlas",
+        "artifact"             : "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+        "artifact_type"        : "amazon.ami",
+        "metadata": {
+            "created_at": "{{timestamp}}"
+        }
+    }
+
+    ],
+
+    "push" :
+    {
+    	"name"                  : "{{user `ATLAS_USERNAME`}}/{{user `ATLAS_NAME`}}",
+    	"vcs"                   : false
+    }
+}
