@@ -37,7 +37,7 @@ resource "aws_instance" "zero-down-time" {
 	vpc_security_group_ids = ["${aws_security_group.default.id}"]
 	depends_on             = ["aws_internet_gateway.gateway", "aws_db_instance.zero_database"]
 
-	count = 2
+	count = 3
 
 	connection {
 		user         = "ubuntu"
