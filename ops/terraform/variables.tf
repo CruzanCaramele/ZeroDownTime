@@ -30,5 +30,5 @@ variable "public_cidrs" {
 
 variable "azs" {
 	description = "availability for resources"
-	default		= "us-east-1a,us-east-1b,us-east-1c"
+	default		= "us-east-1a,us-east-1c,us-east-1b"
 }

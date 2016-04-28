@@ -20,7 +20,7 @@ resource "aws_launch_configuration" "scale_config" {
 resource "aws_autoscaling_group" "scaling_group" {
 	name                	  = "scaling_group"
 	availability_zones  	  = ["${element(split(",", var.azs), count.index)}"]
-	min_size            	  = 0
+	min_size            	  = 1
 	max_size	   	    	  = 5
 	vpc_zone_identifier 	  = ["${element(aws_subnet.private_subnet.*.id, count.index)}"]
 	load_balancers      	  = ["${aws_elb.ZeroBalancer.name}"]
