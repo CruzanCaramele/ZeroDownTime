@@ -17,7 +17,9 @@ resource "atlas_artifact" "ZeroImage" {
 }
 
 resource "atlas_artifact" "ZeroBastionImage" {
-	name = "Panda"
+	name    = "panda/bastionzeroimage"
+	type    = "amazon.ami"
+	version = "latest"
 }
 
 #--------------------------------------------------------------
