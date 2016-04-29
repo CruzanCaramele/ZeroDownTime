@@ -16,6 +16,10 @@ resource "atlas_artifact" "ZeroImage" {
 	version = "latest"
 }
 
+resource "atlas_artifact" "ZeroBastionImage" {
+	name = "Panda"
+}
+
 #--------------------------------------------------------------
 # Module(s)
 #--------------------------------------------------------------
