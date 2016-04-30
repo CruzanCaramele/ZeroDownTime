@@ -39,7 +39,7 @@ resource "aws_eip" "bastion_eip" {
 # bastion - host
 #--------------------------------------------------------------
 resource "aws_instance" "bastion_host" {
-	instance_type   = "t2.micro"
+	instance_type   = "t1.micro"
 	ami             = "${atlas_artifact.ZeroBastionImage.metadata_full.ami_id}"
 	subnet_id       = "${element(aws_subnet.public.*.id, count.index)}"
 	monitoring      = true
