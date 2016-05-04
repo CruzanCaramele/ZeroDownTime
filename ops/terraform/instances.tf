@@ -43,7 +43,7 @@ resource "aws_instance" "zero-down-time" {
 	vpc_security_group_ids = ["${aws_security_group.default.id}"]
 	depends_on             = ["aws_internet_gateway.gateway", "aws_db_instance.zero_database"]
 
-	count = 3
+	count = 2
 
 	connection {
 		user         = "ubuntu"
@@ -54,6 +54,26 @@ resource "aws_instance" "zero-down-time" {
 
 	tags {
 		Name = "web-server"
+	}
+
+	provisioner "file" {
+		source = "${path.module}/scripts/${lookup(var.service_conf, var.platform)}"
+		destination = "/tmp/${lookup(var.service_conf_dest, var.platform)}"
+	}
+
+	provisioner "remote-exec" {
+		inline = [
+			"echo ${var.servers} > /tmp/consul-server-count",
+			"echo ${aws_instance.server.0.private_dns} > /tmp/consul-server-addr",
+		]
+	}
+
+	provisioner "remote-exec" {
+		scripts = [
+			"${path.module}/scripts/install.sh",
+			"${path.module}/scripts/service.sh",
+			"${path.module}/scripts/ip_tables.sh",
+		]
 	}
 
 	lifecycle {
