@@ -32,3 +32,16 @@ variable "azs" {
 	description = "availability for resources"
 	default		= "us-east-1a,us-east-1c,us-east-1b"
 }
+
+variable "service_conf" {
+	description = "consul upstart"
+    ubuntu      = "debian_upstart.conf"
+}
+
+variable "service_conf_dest" {
+	ubuntu  = "upstart.conf"
+}
+
+variable "servers" {
+	default = "3"
+}
